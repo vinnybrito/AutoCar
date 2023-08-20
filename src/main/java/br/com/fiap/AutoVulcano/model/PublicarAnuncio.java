@@ -1,13 +1,14 @@
 package br.com.fiap.AutoVulcano.model;
 
-public class Categoria { //POJO, BO, ENTITY
+public class PublicarAnuncio { //POJO, BO, ENTITY
+    
     
     private String nome;
     private String icone;
 
-    public Categoria() {}
+    public PublicarAnuncio() {}
 
-    public Categoria(String nome, String icone) {
+    public PublicarAnuncio(String nome, String icone) {
         this.nome = nome;
         this.icone = icone;
     }
@@ -47,7 +48,7 @@ public class Categoria { //POJO, BO, ENTITY
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Categoria other = (Categoria) obj;
+        PublicarAnuncio other = (PublicarAnuncio) obj;
         if (nome == null) {
             if (other.nome != null)
                 return false;
