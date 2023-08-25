@@ -145,4 +145,8 @@ public class Veiculo {
                 + ", anoFabricação=" + anoFabricação + ", versao=" + versao + ", cor=" + cor + "]";
     }
 
+    public boolean isEmpty() {
+        return false;
+    }
+
 }
