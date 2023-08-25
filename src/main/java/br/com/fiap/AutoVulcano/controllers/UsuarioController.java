@@ -9,7 +9,7 @@ import br.com.fiap.AutoVulcano.model.Veiculo;
 
 @RestController
 public class UsuarioController {
-    @GetMapping("/cadastrar")
+    @GetMapping("/cadastro")
 
         public Usuario index() {
         Veiculo veiculo_usuario = new Veiculo(1, "PEUGEOT", "308cc", "2015", "2015", "Turbo gasolina 2P", "Cinza");
