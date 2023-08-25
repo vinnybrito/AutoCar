@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.AutoVulcano.model.Veiculo;
 
 @RestController
-public class AnuncioController {
+public class VeiculoController {
     
     @GetMapping("/anunciar")
     // O Spring usa uma biblioteca chamada "jaackson" para converter objetos para o JSON e vice versa;
