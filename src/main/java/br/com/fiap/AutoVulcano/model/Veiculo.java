@@ -2,7 +2,7 @@ package br.com.fiap.AutoVulcano.model;
 
 public class Veiculo { 
      
-    private int id;
+    private Long id;
     private String marca;
     private String modelo;
     private String anoModelo;
@@ -11,9 +11,8 @@ public class Veiculo {
     private String cor;
 
     public Veiculo() {}
-    
-    public Veiculo(int id, String marca, String modelo, String anoModelo, String anoFabricação, String versao,
-            String cor) {
+
+    public Veiculo(Long id, String marca, String modelo, String anoModelo, String anoFabricação, String versao, String cor) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
@@ -23,14 +22,11 @@ public class Veiculo {
         this.cor = cor;
     }
 
-    
-    // ------- GETTERS AND SETTERS ------- //
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,14 +78,11 @@ public class Veiculo {
         this.cor = cor;
     }
 
-    
-    // ------- hashCode ------- //
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((marca == null) ? 0 : marca.hashCode());
         result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
         result = prime * result + ((anoModelo == null) ? 0 : anoModelo.hashCode());
@@ -108,7 +101,10 @@ public class Veiculo {
         if (getClass() != obj.getClass())
             return false;
         Veiculo other = (Veiculo) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
         if (marca == null) {
             if (other.marca != null)
@@ -143,13 +139,10 @@ public class Veiculo {
         return true;
     }
 
-    
-    // ------- toString ------- //
-
     @Override
     public String toString() {
         return "Veiculo [id=" + id + ", marca=" + marca + ", modelo=" + modelo + ", anoModelo=" + anoModelo
                 + ", anoFabricação=" + anoFabricação + ", versao=" + versao + ", cor=" + cor + "]";
-    }   
-    
+    }
+
 }
