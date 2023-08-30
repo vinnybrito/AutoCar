@@ -1,7 +1,7 @@
 package br.com.fiap.AutoVulcano.model;
 
 public class Usuario {
-    private int id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;
@@ -13,7 +13,7 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(int id, String nome, String email, String senha, String numContato, String cep, String estado, String cidade, Veiculo veiculo) {
+    public Usuario(Long id, String nome, String email, String senha, String numContato, String cep, String estado, String cidade, Veiculo veiculo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -25,11 +25,11 @@ public class Usuario {
         this.veiculo = veiculo;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -101,7 +101,7 @@ public class Usuario {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((senha == null) ? 0 : senha.hashCode());
@@ -122,7 +122,10 @@ public class Usuario {
         if (getClass() != obj.getClass())
             return false;
         Usuario other = (Usuario) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
         if (nome == null) {
             if (other.nome != null)

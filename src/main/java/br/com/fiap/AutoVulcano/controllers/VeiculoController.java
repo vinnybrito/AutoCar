@@ -23,11 +23,6 @@ public class VeiculoController {
     Logger log = LoggerFactory.getLogger(getClass());
 
     List<Veiculo> veiculos = new ArrayList<>();
-    
-    @GetMapping("/anunciar")
-    public List<Veiculo> index() {
-        return veiculos;
-    }
 
     @PostMapping("/anunciar")
     public ResponseEntity<Veiculo> create (@RequestBody Veiculo veiculo) {
@@ -35,6 +30,11 @@ public class VeiculoController {
         veiculo.setId(veiculos.size() + 1L);
         veiculos.add(veiculo);
         return ResponseEntity.status(HttpStatus.CREATED).body(veiculo);
+    }
+    
+    @GetMapping("/anunciar")
+    public List<Veiculo> index() {
+        return veiculos;
     }
 
     @GetMapping("/anunciar/{id}")
@@ -51,23 +51,6 @@ public class VeiculoController {
         
         return ResponseEntity.ok(veiculoEncontrado.get());
     } 
-
-    @DeleteMapping("/anunciar/{id}")
-    public ResponseEntity<Veiculo> destroy(@PathVariable Long id) {
-        log.info("Apagando veiculo com ID - " + id);
-
-        var veiculoEncontrado = veiculos
-                                    .stream()
-                                    .filter( (veiculo) -> veiculo.getId().equals(id))
-                                    .findFirst();
-        
-        if (veiculoEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        veiculos.remove(veiculoEncontrado.get()); 
-        return ResponseEntity.noContent().build();
-    }
 
     @PutMapping("/anunciar/{id}")
     public ResponseEntity<Veiculo> update(@PathVariable Long id, @RequestBody Veiculo veiculo) {
@@ -88,6 +71,23 @@ public class VeiculoController {
 
         return ResponseEntity.ok(veiculo);
 
+    }
+
+    @DeleteMapping("/anunciar/{id}")
+    public ResponseEntity<Veiculo> destroy(@PathVariable Long id) {
+        log.info("Apagando veiculo com ID - " + id);
+
+        var veiculoEncontrado = veiculos
+                                    .stream()
+                                    .filter( (veiculo) -> veiculo.getId().equals(id))
+                                    .findFirst();
+        
+        if (veiculoEncontrado.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        veiculos.remove(veiculoEncontrado.get()); 
+        return ResponseEntity.noContent().build();
     }
 
 }
