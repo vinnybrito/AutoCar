@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Veiculo;
+import br.com.fiap.AutoVulcano.repository.VeiculoRepository;
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 
 @RestController
 public class VeiculoController {
@@ -24,50 +28,33 @@ public class VeiculoController {
 
     List<Veiculo> veiculos = new ArrayList<>();
 
+    @Autowired
+    VeiculoRepository repository;
+
     @PostMapping("/anunciar")
     public ResponseEntity<Veiculo> create (@RequestBody Veiculo veiculo) {
         log.info("Cadastrando veiculo" + veiculo);
-        veiculo.setId(veiculos.size() + 1L);
-        veiculos.add(veiculo);
+        repository.save(veiculo);
         return ResponseEntity.status(HttpStatus.CREATED).body(veiculo);
     }
     
     @GetMapping("/anunciar")
     public List<Veiculo> index() {
-        return veiculos;
+        return repository.findAll();
     }
 
     @GetMapping("/anunciar/{id}")
     public ResponseEntity<Veiculo> show(@PathVariable Long id) {
         log.info("Mostrando veiculo com ID - " + id);
-        var veiculoEncontrado = veiculos
-                                    .stream()
-                                    .filter( (veiculo) -> veiculo.getId().equals(id))
-                                    .findFirst();
-
-        if (veiculoEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(veiculoEncontrado.get());
+        return ResponseEntity.ok(getVeiculoById(id));
     } 
 
     @PutMapping("/anunciar/{id}")
     public ResponseEntity<Veiculo> update(@PathVariable Long id, @RequestBody Veiculo veiculo) {
         log.info("Atualizando dados do veiculo com ID - " + id);
-
-        var veiculoEncontrado = veiculos
-                                    .stream()
-                                    .filter( (v) -> v.getId().equals(id))
-                                    .findFirst();   
-                                    
-        if (veiculoEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        veiculos.remove(veiculoEncontrado.get());
+        getVeiculoById(id);
         veiculo.setId(id);
-        veiculos.add(veiculo);
+        repository.save(veiculo);
 
         return ResponseEntity.ok(veiculo);
 
@@ -76,18 +63,14 @@ public class VeiculoController {
     @DeleteMapping("/anunciar/{id}")
     public ResponseEntity<Veiculo> destroy(@PathVariable Long id) {
         log.info("Apagando veiculo com ID - " + id);
-
-        var veiculoEncontrado = veiculos
-                                    .stream()
-                                    .filter( (veiculo) -> veiculo.getId().equals(id))
-                                    .findFirst();
-        
-        if (veiculoEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        veiculos.remove(veiculoEncontrado.get()); 
+        repository.delete(getVeiculoById(id));
         return ResponseEntity.noContent().build();
+    }
+
+    private Veiculo getVeiculoById(Long id){
+        return repository.findById(id).orElseThrow(() -> {
+            return new RuntimeException();
+        });
     }
 
 }
