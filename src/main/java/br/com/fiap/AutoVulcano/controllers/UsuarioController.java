@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Usuario;
+import br.com.fiap.AutoVulcano.repository.UsuarioRepository;
 
 @RestController
 public class UsuarioController {
@@ -24,50 +26,33 @@ public class UsuarioController {
 
     List<Usuario> usuarios = new ArrayList<>();
 
-    @PostMapping
+    @Autowired
+    UsuarioRepository repository;
+
+    @PostMapping("/usuario")
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
         log.info("Cadastrando usuario - " + usuario);
-        usuario.setId(usuarios.size() + 1L);
-        usuarios.add(usuario);
+        repository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @GetMapping("/usuario")
     public List<Usuario> index() {
-        return usuarios;
+        return repository.findAll();
     }
 
     @GetMapping("/usuario/{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id) {
         log.info("Exibir Usuario pelo ID - " + id);
-        var usuarioEncontrado = usuarios
-                                    .stream()
-                                    .filter( (veiculo) -> veiculo.getId()
-                                    .equals(id))
-                                    .findFirst();
-
-        if (usuarioEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(usuarioEncontrado.get());
+        return ResponseEntity.ok(getUsuarioById(id));
     }
 
     @PutMapping("/usuario/{id}") 
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         log.info("Atualizando usuario com ID - " + id);
-        var usuarioEncontrado = usuarios
-                                    .stream()
-                                    .filter( (u) -> u.getId().equals(id) )
-                                    .findFirst(); 
-        
-        if (usuarioEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        usuarios.remove(usuarioEncontrado.get());
+        getUsuarioById(id);
         usuario.setId(id);
-        usuarios.add(usuario);
+        repository.save(usuario);
 
         return ResponseEntity.ok(usuario);
     }
@@ -75,19 +60,14 @@ public class UsuarioController {
     @DeleteMapping("/usuario/{id}") 
     public ResponseEntity<Usuario> destroy(@PathVariable Long id) {
         log.info("Apagando usuario com ID - " + id);
+        repository.delete(getUsuarioById(id));
+        return ResponseEntity.noContent().build();   
+    }
 
-        var usuarioEncontrado = usuarios
-                                    .stream()
-                                    .filter( (usuario) -> usuario.getId().equals(id) )
-                                    .findFirst(); 
-        
-        if (usuarioEncontrado.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        usuarios.remove(usuarioEncontrado.get());
-        return ResponseEntity.noContent().build();
-        
+    private Usuario getUsuarioById(Long id) {
+        return repository.findById(id).orElseThrow(() -> {
+            return new RuntimeException();
+        });
     }
 
 }

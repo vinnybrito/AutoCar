@@ -55,7 +55,6 @@ public class VeiculoController {
         repository.save(veiculo);
 
         return ResponseEntity.ok(veiculo);
-
     }
 
     @DeleteMapping("/anunciar/{id}")
@@ -65,7 +64,7 @@ public class VeiculoController {
         return ResponseEntity.noContent().build();
     }
 
-    private Veiculo getVeiculoById(Long id){
+    private Veiculo getVeiculoById(Long id) {
         return repository.findById(id).orElseThrow(() -> {
             return new RuntimeException();
         });
