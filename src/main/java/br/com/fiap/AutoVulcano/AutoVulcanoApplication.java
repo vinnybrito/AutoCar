@@ -11,5 +11,4 @@ public class AutoVulcanoApplication {
 		SpringApplication.run(AutoVulcanoApplication.class, args);
 	}
 
-
 }
