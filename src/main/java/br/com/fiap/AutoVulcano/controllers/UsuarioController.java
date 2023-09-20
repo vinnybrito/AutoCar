@@ -1,10 +1,7 @@
 package br.com.fiap.AutoVulcano.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Usuario;
 import br.com.fiap.AutoVulcano.repository.UsuarioRepository;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 public class UsuarioController {
-
-    Logger log = LoggerFactory.getLogger(getClass());
-
-    List<Usuario> usuarios = new ArrayList<>();
 
     @Autowired
     UsuarioRepository repository;
 
     @PostMapping("/usuario")
-    public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> create(@RequestBody @Valid Usuario usuario) {
         log.info("Cadastrando usuario - " + usuario);
         repository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);

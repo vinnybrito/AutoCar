@@ -1,10 +1,7 @@
 package br.com.fiap.AutoVulcano.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Veiculo;
 import br.com.fiap.AutoVulcano.repository.VeiculoRepository;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@Slf4j
 public class VeiculoController {
-
-    Logger log = LoggerFactory.getLogger(getClass());
-
-    List<Veiculo> veiculos = new ArrayList<>();
 
     @Autowired
     VeiculoRepository repository;
 
     @PostMapping("/anunciar")
-    public ResponseEntity<Veiculo> create (@RequestBody Veiculo veiculo) {
+    public ResponseEntity<Veiculo> create (@RequestBody @Valid Veiculo veiculo) {
         log.info("Cadastrando veiculo" + veiculo);
         repository.save(veiculo);
         return ResponseEntity.status(HttpStatus.CREATED).body(veiculo);
     }
-    
+
     @GetMapping("/anunciar")
     public List<Veiculo> index() {
         return repository.findAll();
