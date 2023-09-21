@@ -8,9 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,25 +27,23 @@ public class Usuario {
     @Column(name = "ID_USUARIO")
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "NM_USUARIO")
     private String nome;
 
-    @NotBlank
+    @NotBlank(message = "O E-mail não pode estar em branco")
     @Column(name = "EMAIL_USUARIO")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "A senha não pode estar em branco")
     @Column(name = "SENHA_USUARIO")
     private String senha;
 
-    @Min(value = 0)
-    @Max(value = 9)
+    @Size(min = 8, max = 12, message = "O número de contato deve ter entre 8 e 12 digitos")
     @Column(name = "NM_CT_USUARIO")
     private String numContato;
 
-    @Min(value = 0, message = "CEP precisa ter 8 digitos")
-    @Max(value = 8, message = "CEP precisa ter no máximo 8 digitos")
+    @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve estar no formato XXXXX-XXX")
     @Column(name = "CEP_USUARIO")
     private String cep;
 
