@@ -38,7 +38,7 @@ public class Veiculo {
 
     @Pattern(regexp = "\\d{4}", message = "O ano de fabricação deve conter 4 dígitos")
     @Column(name = "ANO_FAB_VEICULO")
-    private String anoFabricação;
+    private String anoFabricacao;
 
     @NotBlank(message = "A versão não pode estar em branco")
     @Column(name = "VERSAO_VEICULO")

@@ -34,6 +34,7 @@ public class VeiculoController {
 
     @GetMapping("/anunciar")
     public List<Veiculo> index() {
+        log.info("Buscando todos os anuncios");
         return repository.findAll();
     }
 
