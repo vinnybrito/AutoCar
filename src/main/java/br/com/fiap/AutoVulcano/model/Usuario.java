@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "TB_USUARIO")
 public class Usuario {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USUARIO")
@@ -54,7 +54,54 @@ public class Usuario {
     private String cidade;
 
     @ManyToOne
-    @JoinColumn(name = "USUARIO_VEICULO")
+    @JoinColumn(name = "ID_VEICULO")
     private Veiculo veiculo;
+
+    // métodos
+
+    public Usuario withId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public Usuario withNome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public Usuario withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Usuario withSenha(String senha) {
+        this.senha = senha;
+        return this;
+    }
+
+    public Usuario withNumContato(String numContato) {
+        this.numContato = numContato;
+        return this;
+    }
+
+    public Usuario withCep(String cep) {
+        this.cep = cep;
+        return this;
+    }
+
+    public Usuario withEstado(String estado) {
+        this.estado = estado;
+        return this;
+    }
+
+    public Usuario withCidade(String cidade) {
+        this.cidade = cidade;
+        return this;
+    }
+
+    public Usuario withVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+        return this;
+    }
 
 }
