@@ -2,7 +2,6 @@ package br.com.fiap.AutoVulcano.config;
 
 import java.util.List;
 
-// import org.hibernate.validator.constraints.UUID.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

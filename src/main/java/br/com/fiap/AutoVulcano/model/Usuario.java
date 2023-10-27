@@ -16,9 +16,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "TB_USUARIO")
 public class Usuario {
 
@@ -57,7 +57,7 @@ public class Usuario {
     @JoinColumn(name = "ID_VEICULO")
     private Veiculo veiculo;
 
-    // métodos
+    // -------- Métodos -------- //
 
     public Usuario withId(Long id) {
         this.id = id;

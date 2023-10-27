@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Usuario;
@@ -18,32 +19,33 @@ import br.com.fiap.AutoVulcano.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
 @Slf4j
+@RestController
+@RequestMapping("usuario")
 public class UsuarioController {
 
     @Autowired
     UsuarioRepository repository;
 
-    @PostMapping("/usuario")
+    @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody @Valid Usuario usuario) {
         log.info("Cadastrando usuario - " + usuario);
         repository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
-    @GetMapping("/usuario")
+    @GetMapping
     public List<Usuario> index() {
         return repository.findAll();
     }
 
-    @GetMapping("/usuario/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id) {
         log.info("Exibir Usuario pelo ID - " + id);
         return ResponseEntity.ok(getUsuarioById(id));
     }
 
-    @PutMapping("/usuario/{id}") 
+    @PutMapping("{id}") 
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         log.info("Atualizando usuario com ID - " + id);
         getUsuarioById(id);
@@ -53,7 +55,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @DeleteMapping("/usuario/{id}") 
+    @DeleteMapping("{id}") 
     public ResponseEntity<Usuario> destroy(@PathVariable Long id) {
         log.info("Apagando usuario com ID - " + id);
         repository.delete(getUsuarioById(id));
