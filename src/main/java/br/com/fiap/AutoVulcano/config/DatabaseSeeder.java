@@ -26,11 +26,17 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private Veiculo veiculoC = new Veiculo(null, "lamborghini", "Huracan", "2022", "2021", "Evo", "Cinza");
 
+    private Veiculo veiculoD = new Veiculo(null, "BMW", "X5", "2024", "2023", "X5", "Aspargo");
+
+    private Veiculo veiculoE = new Veiculo(null, "Maserati", "Levante", "2023", "2022", "Trofeo", "Silver");
+
+    private Veiculo veiculoF = new Veiculo(null, "Porsche", "718", "2021", "2020", "Turbo", "Azul Biskaya");
+
     @Override
     public void run(String... args) throws Exception {
 
         veiculoRepository.saveAll(
-                List.of(veiculoA, veiculoB, veiculoC));
+                List.of(veiculoA, veiculoB, veiculoC, veiculoD, veiculoE, veiculoF));
 
         usuarioRepository.saveAll(
                 List.of(
@@ -48,7 +54,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                                 .withEmail("will@hotmail.com")
                                 .withSenha("Will@321")
                                 .withNumContato("11981694736")
-                                .withCep("08380-048")
+                                .withCep("08380-079")
                                 .withEstado("SP")
                                 .withCidade("São Paulo")
                                 .withVeiculo(veiculoB),
@@ -57,11 +63,37 @@ public class DatabaseSeeder implements CommandLineRunner {
                                 .withEmail("Theus@hotmail.com")
                                 .withSenha("Theus@987")
                                 .withNumContato("11981695577")
-                                .withCep("08380-048")
+                                .withCep("08380-035")
                                 .withEstado("SP")
                                 .withCidade("São Paulo")
-                                .withVeiculo(veiculoC)));
-
+                                .withVeiculo(veiculoC),
+                        new Usuario()
+                                .withNome("Gustavo")
+                                .withEmail("Gustavo@hotmail.com")
+                                .withSenha("Gustavo@748")
+                                .withNumContato("11982545577")
+                                .withCep("08380-058")
+                                .withEstado("PR")
+                                .withCidade("Maringá")
+                                .withVeiculo(veiculoD),
+                        new Usuario()
+                                .withNome("Patricia")
+                                .withEmail("Paty@hotmail.com")
+                                .withSenha("paty@748")
+                                .withNumContato("11882545577")
+                                .withCep("08500-058")
+                                .withEstado("RJ")
+                                .withCidade("Copacabana")
+                                .withVeiculo(veiculoE),
+                        new Usuario()
+                                .withNome("Vanessa")
+                                .withEmail("nessa@hotmail.com")
+                                .withSenha("Nessa@748")
+                                .withNumContato("11982545784")
+                                .withCep("07890-058")
+                                .withEstado("PR")
+                                .withCidade("Maringá")
+                                .withVeiculo(veiculoF)));
     }
 
 }

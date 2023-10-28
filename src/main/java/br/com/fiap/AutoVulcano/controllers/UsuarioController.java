@@ -1,8 +1,10 @@
 package br.com.fiap.AutoVulcano.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.AutoVulcano.model.Usuario;
@@ -34,9 +37,22 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
+    // @GetMapping
+    // public List<Usuario> index() {
+    //     return repository.findAll();
+    // }
+
     @GetMapping
-    public List<Usuario> index() {
-        return repository.findAll();
+    public Page<Usuario> index(
+        @PageableDefault(size = 5, sort = "cidade", direction = Sort.Direction.DESC) Pageable pageRequest, 
+        @RequestParam(required = false) String busca) { 
+
+        log.info("Buscando todos os usuários");
+
+        if (busca == null || busca.isEmpty())
+            return repository.findAll(pageRequest);
+
+        return repository.findByCidadeContainingIgnoreCase(busca,pageRequest);
     }
 
     @GetMapping("{id}")
