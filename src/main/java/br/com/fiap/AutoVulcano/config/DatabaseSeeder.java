@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import br.com.fiap.AutoVulcano.model.Usuario;
 import br.com.fiap.AutoVulcano.model.Veiculo;
@@ -12,6 +13,7 @@ import br.com.fiap.AutoVulcano.repository.UsuarioRepository;
 import br.com.fiap.AutoVulcano.repository.VeiculoRepository;
 
 @Configuration
+@Profile("dev")
 public class DatabaseSeeder implements CommandLineRunner {
 
     @Autowired
