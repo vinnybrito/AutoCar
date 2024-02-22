@@ -9,7 +9,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import br.com.fiap.AutoVulcano.model.dto.Token;
-
 @Service
 public class TokenService {
     
