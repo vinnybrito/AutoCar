@@ -3,6 +3,9 @@ package br.com.fiap.AutoVulcano.model;
 import java.util.Collection;
 
 import java.util.List;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,5 +73,9 @@ public class UsuarioAuth implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Authentication toAuthentication() {
+        return new UsernamePasswordAuthenticationToken(email, null, getAuthorities());
     }
 }
