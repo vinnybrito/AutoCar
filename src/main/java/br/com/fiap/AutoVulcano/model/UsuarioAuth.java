@@ -78,4 +78,5 @@ public class UsuarioAuth implements UserDetails{
     public Authentication toAuthentication() {
         return new UsernamePasswordAuthenticationToken(email, null, getAuthorities());
     }
+    
 }

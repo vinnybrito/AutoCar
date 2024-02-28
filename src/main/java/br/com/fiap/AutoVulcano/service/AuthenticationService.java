@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.AutoVulcano.repository.UsuarioAuthRepository;
 
-
-
 @Service
 public class AuthenticationService implements UserDetailsService{
     @Autowired

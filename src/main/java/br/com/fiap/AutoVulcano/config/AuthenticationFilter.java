@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Component
 @Log4j2
-public class AuthenticationFilter extends OncePerRequestFilter{
+public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     TokenService tokenService;
@@ -26,31 +26,29 @@ public class AuthenticationFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
-                var token = getToken(request);
 
-                if(token != null){
-                    UsuarioAuth user = tokenService.validateToken(token);
+        var token = getToken(request);
 
-                    Authentication auth = user.toAuthentication();
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+        if (token != null) {
+            UsuarioAuth user = tokenService.validateToken(token);
 
-                }
+            Authentication auth = user.toAuthentication();
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
 
-                filterChain.doFilter(request, response);
-       
+        filterChain.doFilter(request, response);
+
     }
 
     private String getToken(HttpServletRequest request) {
         var header = request.getHeader("Authorization");
 
-        if(header == null || !header.startsWith("Bearer ")) return null;
+        if (header == null || !header.startsWith("Bearer "))
+            return null;
 
         var token = header.replace("Bearer ", "");
 
         return token;
     }
 
-
-    
 }

@@ -20,24 +20,22 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests((authorize) -> authorize
-                    .requestMatchers("/login", "/usuarioauth").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .csrf(csrf -> csrf.disable())
-            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            ;
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/login", "/usuarioauth").permitAll()
+                        .anyRequest().authenticated())
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager  authenticationManager(AuthenticationConfiguration config) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
