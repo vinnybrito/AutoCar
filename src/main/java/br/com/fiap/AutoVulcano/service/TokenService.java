@@ -25,7 +25,7 @@ public class TokenService {
         var jwt = JWT.create()
             .withIssuer("AutoCar")
             .withSubject(email)
-            .withExpiresAt(Instant.now().plus(10, ChronoUnit.MINUTES))
+            .withExpiresAt(Instant.now().plus(7, ChronoUnit.DAYS))
             .sign(alg);
 
             return new Token(jwt, "JWT", "Bear");
